@@ -288,8 +288,11 @@ function babelPresetExpo(api, options = {}) {
                             ? [
                                 // These plugins are required to support the older JavaScript environment of Android factory WebViews.
                                 // For example Android 9 and Chromium 66.
+                                // callsite: https://github.com/expo/expo/blob/fa2c26e39549edc144657c50a189271ca56d1ab9/packages/%40expo/log-box/src/LogBox.ts#L88
                                 [require('@babel/plugin-transform-optional-chaining'), { loose: true }],
+                                // callsite: https://github.com/facebook/metro/blob/7446b90ea53fa0173256da690a01df12e67b0deb/packages/metro-runtime/src/polyfills/require.js#L97
                                 [require('@babel/plugin-transform-nullish-coalescing-operator'), { loose: true }],
+                                // callsite: https://github.com/expo/expo/blob/fa2c26e39549edc144657c50a189271ca56d1ab9/packages/%40expo/log-box/src/Data/LogBoxData.tsx#L404
                                 [
                                     require('@babel/plugin-transform-logical-assignment-operators'),
                                     { loose: true },
