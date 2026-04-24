@@ -2817,8 +2817,14 @@ importers:
       '@babel/plugin-transform-modules-commonjs':
         specifier: ^7.24.8
         version: 7.28.6(@babel/core@7.29.0)
+      '@babel/plugin-transform-nullish-coalescing-operator':
+        specifier: ^7.24.7
+        version: 7.28.6(@babel/core@7.29.0)
       '@babel/plugin-transform-object-rest-spread':
         specifier: ^7.24.7
+        version: 7.28.6(@babel/core@7.29.0)
+      '@babel/plugin-transform-optional-chaining':
+        specifier: ^7.24.8
         version: 7.28.6(@babel/core@7.29.0)
       '@babel/plugin-transform-parameters':
         specifier: ^7.24.7

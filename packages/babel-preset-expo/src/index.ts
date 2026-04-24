@@ -405,11 +405,26 @@ function babelPresetExpo(api: ConfigAPI, options: BabelPresetExpoOptions = {}): 
         // doesn't do that and we can't rely on Hermes spec compliance enough to use standard presets.
         const babelPresetReactNativeEnv = getPreset(null, presetOpts);
 
-        // Add the `@babel/plugin-transform-export-namespace-from` plugin to the preset but ensure it runs after
-        // the TypeScript plugins to ensure namespace type exports (TypeScript 5.0+) `export type * as Types from './module';`
-        // are stripped before the transform. Otherwise the transform will extraneously include the types as syntax.
         babelPresetReactNativeEnv.overrides.push({
-          plugins: [require('./babel-plugin-transform-export-namespace-from')],
+          plugins: [
+            // Add the `@babel/plugin-transform-export-namespace-from` plugin to the preset but ensure it runs after
+            // the TypeScript plugins to ensure namespace type exports (TypeScript 5.0+) `export type * as Types from './module';`
+            // are stripped before the transform. Otherwise the transform will extraneously include the types as syntax.
+            require('./babel-plugin-transform-export-namespace-from'),
+
+            ...(isDomComponent
+              ? [
+                  // These plugins are required to support the older JavaScript environment of Android factory WebViews.
+                  // For example Android 9 and Chromium 66.
+                  [require('@babel/plugin-transform-optional-chaining'), { loose: true }],
+                  [require('@babel/plugin-transform-nullish-coalescing-operator'), { loose: true }],
+                  [
+                    require('@babel/plugin-transform-logical-assignment-operators'),
+                    { loose: true },
+                  ],
+                ]
+              : []),
+          ],
         });
 
         return babelPresetReactNativeEnv;
